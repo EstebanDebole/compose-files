@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  duckdns:
+    image: linuxserver/duckdns
+    container_name: duckdns
+    environment:
+      - TZ=America/Argentina/Buenos_Aires
+      - SUBDOMAINS=${SUBDOMAIN}
+      - TOKEN=${TOKEN_ID}
+      - LOG_FILE=true
+    restart: always

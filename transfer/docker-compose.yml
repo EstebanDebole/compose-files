@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  transfer:
+    image: dutchcoders/transfer.sh
+    container_name: transfer
+    expose:
+      - "8080"
+    environment:
+      - PROVIDER=local
+      - BASEDIR=/tmp/
+      - VIRTUAL_HOST=${DOMAIN}
+      - VIRTUAL_PORT=8080
+      - VIRTUAL_PROTO=http
+      - LETSENCRYPT_HOST=${DOMAIN}
+      - LETSENCRYPT_EMAIL=${EMAIL}
+    networks:
+      - proxy
+    volumes:
+      - ./files:/tmp/
+networks:
+  proxy:
+    external: true

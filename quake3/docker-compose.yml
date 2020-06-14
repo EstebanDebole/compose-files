@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  quake3:
+    image: inanimate/quake3
+    ports:
+      - 27015:27015/udp
+    volumes:
+      - ./pak0.pk3:/usr/share/games/quake3/baseq3/pak0.pk3
+      - ./autoexec.cfg:/usr/share/games/quake3/baseq3/autoexec.cfg
+      - ./bots.cfg:/usr/share/games/quake3/baseq3/bots.cfg
+      - ./levels.cfg:/usr/share/games/quake3/baseq3/levels.cfg
+      - ./server.cfg:/usr/share/games/quake3/baseq3/server.cfg

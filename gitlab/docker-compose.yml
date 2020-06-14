@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  web:
+    image: "gitlab/gitlab-ce:latest"
+    restart: always
+    hostname: ${DOMAIN}
+    environment:
+      - GITLAB_OMNIBUS_CONFIG='external_url \'${DOMAIN}\''
+      - VIRTUAL_HOST=${DOMAIN}
+      - VIRTUAL_PORT=80
+      - LETSENCRYPT_HOST=${DOMAIN}
+      - LETSENCRYPT_EMAIL=${EMAIL}
+      - GITLAB_HOME=/usr/gitlab/
+    ports:
+      - "2020:22"
+    expose:
+      - "80"
+    volumes:
+      - "$GITLAB_HOME/config:/etc/gitlab"
+      - "$GITLAB_HOME/logs:/var/log/gitlab"
+      - "$GITLAB_HOME/data:/var/opt/gitlab"
+    networks:
+      - proxy
+networks:
+  proxy:
+    external: true

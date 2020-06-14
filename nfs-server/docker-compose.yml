@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  nfs:
+    image: itsthenetwork/nfs-server-alpine:12
+    restart: unless-stopped
+    volumes:
+      - /mnt/backup/nfs:/nfsshare
+    environment:
+      - SHARED_DIRECTORY=/nfsshare
+    cap_add:
+      - SYS_ADMIN
+      - SETPCAP
+    ports:
+      - "2049:2049"
