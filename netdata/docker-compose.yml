@@ -2,9 +2,16 @@ version: "3.8"
 services:
   netdata:
     image: netdata/netdata
+    container_name: netdata
     hostname: ${DOMAIN}
-    ports:
-      - 19999:19999
+    expose:
+      - 19999
+    environment:
+      - VIRTUAL_HOST=${DOMAIN}
+      - VIRTUAL_PORT=19999
+      - VIRTUAL_PROTO=http
+      - LETSENCRYPT_HOST=${DOMAIN}
+      - LETSENCRYPT_EMAIL=${EMAIL}
     cap_add:
       - SYS_PTRACE
     security_opt:
@@ -13,4 +20,10 @@ services:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./health_alarm_notify.conf:/etc/netdata/health_alarm_notify.conf
     restart: always
+    networks:
+      - proxy
+networks:
+  proxy:
+    external: true
